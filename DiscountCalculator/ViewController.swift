@@ -161,17 +161,19 @@ class ViewController: UIViewController {
         view.addSubview(topHStackView)
         
         let discountHstackView = UIStackView(arrangedSubviews: [discountTextLabel, discountNumLabel])
+        discountHstackView.distribution = .equalSpacing
         view.addSubview(discountHstackView)
         
-        let bottom1HStackView = UIStackView(arrangedSubviews: [afterDiscountTextLabel, afterDiscountNumLabel])
-        view.addSubview(bottom1HStackView)
+        let middleHStackView = UIStackView(arrangedSubviews: [afterDiscountTextLabel, afterDiscountNumLabel])
+        middleHStackView.distribution = .equalSpacing
+        view.addSubview(middleHStackView)
 
         
-        let bottom2HStackView = UIStackView(arrangedSubviews: [savedLabel, savedNumLabel])
-        view.addSubview(bottom2HStackView)
+        let bottomHStackView = UIStackView(arrangedSubviews: [savedLabel, savedNumLabel])
+        view.addSubview(bottomHStackView)
 
         
-        let mainVStackView = UIStackView(arrangedSubviews: [topHStackView, slider, discountHstackView, bottom1HStackView, bottom2HStackView])
+        let mainVStackView = UIStackView(arrangedSubviews: [topHStackView, slider, discountHstackView, middleHStackView, bottomHStackView])
         mainVStackView.axis = .vertical
         mainVStackView.spacing = 15
         view.addSubview(mainVStackView)
