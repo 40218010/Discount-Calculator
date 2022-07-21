@@ -44,6 +44,12 @@ class DiscountComputer {
         }
         self.price = Float(text) ?? 0
     }
+    
+    var saved: Float {
+        return price - priceAfterDiscount
+    }
+    
+
 }
 
 class ViewController: UIViewController {
@@ -56,7 +62,7 @@ class ViewController: UIViewController {
     // MARK: UIs
     let priceLabel: UILabel = {
         let labelOne = UILabel()
-        labelOne.text = "原價"
+        labelOne.text = "Original price"
 //        labelOne.backgroundColor = .systemCyan
         
         return labelOne
@@ -88,16 +94,23 @@ class ViewController: UIViewController {
         return mySlider
     }()
     
-    let discountLabel: UILabel = {
+    let discountTextLabel: UILabel = {
         let labelTwo = UILabel()
-        labelTwo.text = "0%"
+        labelTwo.text = "Discount"
         return labelTwo
+        
+    }()
+    
+    let discountNumLabel: UILabel = {
+        let labelFive = UILabel()
+        labelFive.text = "0%"
+        return labelFive
         
     }()
     
     let afterDiscountTextLabel: UILabel = {
         let labelThree = UILabel()
-        labelThree.text = "特價"
+        labelThree.text = "Price after discount"
         return labelThree
     }()
     
@@ -105,6 +118,18 @@ class ViewController: UIViewController {
         let labelFour = UILabel()
         labelFour.text = "???"
         return labelFour
+    }()
+    
+    let savedLabel: UILabel = {
+        let labelSix = UILabel()
+        labelSix.text = "You saved"
+        return labelSix
+    }()
+    
+    let savedNumLabel: UILabel = {
+        let labelSeven = UILabel()
+        labelSeven.text = "💰💰💰"
+        return labelSeven
     }()
     
     
@@ -121,8 +146,9 @@ class ViewController: UIViewController {
         priceTextField.addTarget(self, action: #selector(textFieldEditing), for: .editingChanged)
         
         computer.valueChanged = { computer in
-            self.discountLabel.text = "\(computer.discountPercentage)"
+            self.discountNumLabel.text = "\(computer.discountPercentage)"
             self.afterDiscountNumLabel.text = "\(computer.priceAfterDiscount)"
+            self.savedNumLabel.text = "\(computer.saved)"
         }
     }
     
@@ -133,21 +159,21 @@ class ViewController: UIViewController {
         let topHStackView = UIStackView(arrangedSubviews: [priceLabel, priceTextField])
         topHStackView.spacing = 10
         view.addSubview(topHStackView)
+        
+        let discountHstackView = UIStackView(arrangedSubviews: [discountTextLabel, discountNumLabel])
+        view.addSubview(discountHstackView)
+        
+        let bottom1HStackView = UIStackView(arrangedSubviews: [afterDiscountTextLabel, afterDiscountNumLabel])
+        view.addSubview(bottom1HStackView)
 
         
-        let middleVStackView = UIStackView(arrangedSubviews: [slider, discountLabel])
-        middleVStackView.axis = .vertical
-        middleVStackView.spacing = 10
-        view.addSubview(middleVStackView)
-        
-        let bottomHStackView = UIStackView(arrangedSubviews: [afterDiscountTextLabel, afterDiscountNumLabel])
-        middleVStackView.spacing = 10
-        view.addSubview(bottomHStackView)
+        let bottom2HStackView = UIStackView(arrangedSubviews: [savedLabel, savedNumLabel])
+        view.addSubview(bottom2HStackView)
 
         
-        let mainVStackView = UIStackView(arrangedSubviews: [topHStackView, middleVStackView, bottomHStackView])
+        let mainVStackView = UIStackView(arrangedSubviews: [topHStackView, slider, discountHstackView, bottom1HStackView, bottom2HStackView])
         mainVStackView.axis = .vertical
-        mainVStackView.spacing = 10
+        mainVStackView.spacing = 15
         view.addSubview(mainVStackView)
         mainVStackView.snp.makeConstraints { make in
             make.leading.equalTo(20)
@@ -157,8 +183,7 @@ class ViewController: UIViewController {
         
         
         
-
-        
+                
         
     }
 
